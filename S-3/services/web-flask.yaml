@@ -1,0 +1,29 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: web-flask-deploy
+spec:
+  replicas: 3 
+  selector:  
+    matchLabels:
+      app: web-flask
+  # pod hazir olana kadar 10 saniye bekle demek
+  minReadySeconds: 10 
+  strategy:
+  # 2 cesit strategy var: 1.recreate ve 2.rolling update. 
+    type: RollingUpdate 
+    rollingUpdate:
+      maxUnavailable: 1 
+      maxSurge: 1 
+  template: 
+    metadata:
+      labels:
+        app: web-flask
+    spec:
+      containers:
+      - name: web-flask-pod
+        image: clarusway/cw_web_flask1
+        ports:
+        - containerPort: 5000
+        resources:
+          
