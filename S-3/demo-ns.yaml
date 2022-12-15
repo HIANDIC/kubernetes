@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  demo 
+
+# yukaridakini cli üzerinden de su sekilde olusturabiliriz:
+# kubectl create namespace demo
