@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service   
+metadata:
+  name: web-flask-svc
+  labels:
+    app: web-flask
+spec:
+  type: NodePort # ClusterIP  # internal iletisim sunuyor; cunku type i ClusterIP
+  # type ilk basta ClusterIP olarak yaptik ve ping atamadik. Sonra da type i NodePort olarak degistirdik.
+  # NodePort araciligi ile disaridan gelen request ler IP address ve port numarasi ile service imize ulasilabiliyor
+  # service cluster icerisine yayilan bir yapiya sahiptir; yani hem node lari hem de control plane i icerisine alir. Bu nedenle NodePort kullandigimizda; master machine nin public IP si ve service port u üzerinden app e erisebiliriz. Yani sadece worker node üzerinden erisim söz konusu degil. Hem worker node hem de control plane üzerinden service imize erisebildik.
+  ports:
+  - port: 3000  # service ulasmamizi saglayan port
+    nodePort: 30036 # verdigimiz bu portu sonradan verdik. Bu sayede kendimiz port atamis olduk.Artik app e bu port ile ulasmis oluyoruz
+    targetPort: 5000  # pod a ulasmamizi saglayan port
+  selector:
+    app: web-flask
