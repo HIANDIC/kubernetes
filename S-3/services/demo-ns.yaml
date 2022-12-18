@@ -3,5 +3,5 @@ kind: Namespace
 metadata:
   name:  demo 
 
-# yukaridakini cli üzerinden de su sekilde olusturabiliriz:
+# We can also create the above via cli as follows:
 # kubectl create namespace demo
