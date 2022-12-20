@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+data:
+  config: |
+    greeting: Boungiorno
+
+
+  # burada key-value seklinde yazmis olduk.
+  # yukarida ise key olarak config dedik; value olarak da key-value seklinde bir deger atamis olduk
+  # GREETING: Merhaba # here GREETING is in upper case written, because in app it is written in upper case.
