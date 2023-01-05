@@ -1,0 +1,18 @@
+apiVersion: v1
+
+kind: PersistentVolume
+
+metadata:
+  name: db-pv-vol
+  labels:
+    type: local
+spec:
+  storageClassName: manual # here we gave at our own will. We give a name to storageClassName. Because of that in persistent volume claim same name must be used and defined
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/ubuntu/pv-data"
+
+
