@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 7
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+        ports:
+        - containerPort: 80
+      affinity:   # here we declare affinity 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: # during scheduling it is required and existing podes will not be modified or touched
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: size
+                    operator: In    # look for if size key exist in file or not
+                    values:
+                      - large
+                      - medium

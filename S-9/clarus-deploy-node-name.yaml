@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    environment: dev
+spec:
+  replicas: 15
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:          
+        ports:
+        - containerPort: 80
+      nodeName: kube-master   # just added a node name. Our pod will be created on this node. There is no taints on kube-master. Because of that our pod can be created on master node.

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 7
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+        ports:
+        - containerPort: 80
+      affinity:   # here we declare affinity 
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:  # create here if possible
+            - preference:
+                matchExpressions:
+                  - key: size
+                    operator: In  # In >> looking for both key and value of that key. If both of them matches, pod will be created on this node.    Exists >> if key exists in file, create pod on this node. The value of that key is not important. Here we define only key and operator; not values.
+                    values:
+                    - large
+                    - medium
+              weight: 1
+            
+                    
