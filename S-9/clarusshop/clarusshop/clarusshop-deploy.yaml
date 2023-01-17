@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clarusshop
+  labels:
+    app: clarusshop
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: clarusshop
+  template:
+    metadata:
+      labels:
+        app: clarusshop
+    spec:
+      containers:
+      - name: clarusshop
+        image: clarusway/clarusshop
+        ports:
+        - containerPort: 80
+        resources:          
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:  # It is required
+          - labelSelector:
+              matchExpressions:
+              - key: tier   # labels is tier:db. Where this label exists (on which node), pods wil be created on this node. So both db and frontend deployment will be created on the same node, because of podAffinity.
+                operator: In
+                values:
+                - db
+            topologyKey: "kubernetes.io/hostname"
