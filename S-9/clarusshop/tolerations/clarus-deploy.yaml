@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    environment: dev
+spec:
+  replicas: 7
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:   # there is taint on worker node. Because of that our pods will be created on the node/nodes without taints
+      - name: nginx
+        image: nginx
+        resources:          
+        ports:
+        - containerPort: 80
